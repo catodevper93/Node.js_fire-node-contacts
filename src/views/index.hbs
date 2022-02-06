@@ -1,0 +1,144 @@
+<div class="col-md-6">
+
+    <div class="card card_style">
+
+
+        <div class="card-header" style="border-bottom: 2px solid black;">
+            <h3>
+                Add
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+
+            {{!--
+            pondremos "contacto" en singular, haciendo referencia a la colección "contactos" y accederemos
+            a cada propiedad a insertar en nuestra firestore... nota: "contacto" es una pripedad puesta como variable
+            en nuestro controlador de editarGetRecursoPorId
+
+            en nuestro "action" de nuestro form contamos con una condición, si obtenemos id procedemos a actualizar
+            el recurso, caso contrario agregamos un nuevo recurso.
+            --}}
+
+            <form action="{{#unless contacto.id}}/new-contact{{else}}/edited-contact/{{contacto.id}}{{/unless}}"
+                method="POST">
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-dice-one"></i></span>
+                    <input type="text" class="form-control" placeholder="Name" name="nombre" value="{{contacto.nombre}}"
+                        autofocus />
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-dice-two"></i></span>
+                    <input type="text" class="form-control" placeholder="Lastname" name="apellido"
+                        value="{{contacto.apellido}}" autofocus />
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-dice-three"></i></span>
+                    <input type="text" class="form-control" placeholder="Email" name="correo"
+                        value="{{contacto.correo}}" autofocus />
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-dice-four"></i></span>
+                    <input type="text" class="form-control" placeholder="Telephone" name="telefono"
+                        value="{{contacto.telefono}}" autofocus />
+                </div>
+
+
+                <div class="text-end">
+
+                    {{#if contacto.id}}
+                    <button class="btn btn-warning btn-sm">Update</button>
+
+                    <a href="/" class="btn btn-danger btn-sm">
+                        Cancel
+                    </a>
+
+
+                    {{else}}
+
+                    <button class="btn btn-success btn-sm">Add</button>
+                    {{/if}}
+
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="col-md-6">
+
+    {{#if mostrar_listado}}
+
+    <div class="card card_style">
+
+        <div class="card-header" style="border-bottom: 2px solid black;">
+            <h3>
+                Contacts {{lista_contactos.length}}
+            </h3>
+
+        </div>
+
+        <div class="card-body ">
+
+
+            {{#if lista_contactos}}
+
+            {{#each lista_contactos}}
+
+            <div class="d-grid gap-2 d-md-block text-center">
+                <a href="/edit-contact/{{id}}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/delete-contact/{{id}}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+
+            <div class="card card_contact" style="margin-bottom: 5%;">
+
+
+
+                <div class="card-header" style="border: 1px solid black;">
+                    <i class="fas fa-chess-queen"></i> <em><b>{{id}}</b></em>
+                </div>
+
+
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item">
+                        <b>Name:</b> {{nombre}} <br />
+                        <b>Lastname:</b> {{apellido}} <br />
+                        <b>Email:</b> {{correo}} <br />
+                        <b>Tel:</b> {{telefono}}
+                    </li>
+
+                </ul>
+
+            </div>
+
+            {{/each}}
+
+            {{else}}
+
+            <div class="alert alert-danger text-center" role="alert">
+                No Contacts Yet.
+            </div>
+
+            {{/if}}
+
+
+        </div>
+    </div>
+
+
+    {{/if}}
+
+
+</div>
